@@ -8,13 +8,17 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <textarea id="editor" placeholder="Escribe en Markdown aquí..."></textarea>
-  <div class="buttons">
-    <button id="clear">Borrar Nota</button>
-    <button id="export">Exportar .txt</button>
+  <div id="note-wrapper">
+    <textarea id="editor" placeholder=""></textarea>
+    <div id="note-tip">
+      <strong>Atajos:</strong> # Título, **negrita**, *cursiva*, - lista, 1. lista numerada, `código`
+    </div>
+    <div class="buttons">
+      <button id="clear">Borrar Nota</button>
+      <button id="export">Exportar .txt</button>
+    </div>
+    <div id="preview"></div>
   </div>
-  <h2>Vista previa</h2>
-  <div id="preview"></div>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="app.js"></script>
 </body>

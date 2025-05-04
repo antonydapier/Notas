@@ -6,7 +6,7 @@ body {
   margin: 0 auto;
   padding: 1.5rem;
 }
-textarea#editor {
+#editor {
   width: 100%;
   height: 200px;
   background: #252526;
@@ -16,12 +16,19 @@ textarea#editor {
   font-size: 1rem;
   line-height: 1.5;
   resize: vertical;
+  border-radius: 0.5rem;
+}
+#note-tip {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #aaa;
 }
 #preview {
   background: #2d2d2d;
   padding: 1rem;
   margin-top: 1rem;
   border-radius: 0.5rem;
+  white-space: normal;
 }
 .buttons {
   margin-top: 1rem;
@@ -45,7 +52,7 @@ button:hover {
     padding: 1rem;
     font-size: 0.95rem;
   }
-  textarea#editor {
+  #editor {
     height: 150px;
   }
 }
