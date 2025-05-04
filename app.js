@@ -19,10 +19,29 @@ exportBtn.addEventListener('click', () => {
   link.click();
 });
 
+let preferredVoice = null;
+
+function setPreferredVoice() {
+  const voices = speechSynthesis.getVoices();
+  preferredVoice = voices.find(v =>
+    v.lang.startsWith('es') &&
+    (v.name.toLowerCase().includes('female') ||
+     v.name.toLowerCase().includes('mujer') ||
+     v.name.toLowerCase().includes('google español') ||
+     v.name.toLowerCase().includes('sabina') ||
+     v.name.toLowerCase().includes('mónica') ||
+     v.name.toLowerCase().includes('paulina'))
+  ) || voices.find(v => v.lang.startsWith('es'));
+}
+
+speechSynthesis.onvoiceschanged = setPreferredVoice;
+setPreferredVoice();
+
 readBtn.addEventListener('click', () => {
   const text = editor.value;
   const msg = new SpeechSynthesisUtterance(text);
   msg.lang = 'es-ES';
+  if (preferredVoice) msg.voice = preferredVoice;
   speechSynthesis.speak(msg);
 });
 
