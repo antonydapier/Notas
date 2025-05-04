@@ -1,4 +1,7 @@
 
+* {
+  box-sizing: border-box;
+}
 body {
   margin: 0;
   padding: 0;
@@ -8,6 +11,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  overflow: hidden;
 }
 
 #editor {
@@ -20,16 +24,20 @@ body {
   border: none;
   resize: none;
   outline: none;
+  overflow-y: auto;
 }
 
 #controls {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  background: #121212;
-  padding: 0.5rem;
+  align-items: center;
   gap: 0.5rem;
+  background: #121212;
+  padding: 0.6rem;
   border-top: 1px solid #333;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
 }
 
 #controls button {
