@@ -1,71 +1,41 @@
 
-const editor = document.getElementById('editor');
-const clearBtn = document.getElementById('clear');
-const exportBtn = document.getElementById('export');
-const readBtn = document.getElementById('read');
-const stopBtn = document.getElementById('stop');
+const editor = document.getElementById("editor");
+const clearBtn = document.getElementById("clear");
+const exportBtn = document.getElementById("export");
+const readBtn = document.getElementById("read");
+const stopBtn = document.getElementById("stop");
 
-clearBtn.addEventListener('click', () => {
-  if (confirm('¿Seguro que quieres borrar la nota?')) {
-    editor.value = '';
-  }
+// Autoguardado temporal (se borra al cerrar pestaña)
+editor.value = sessionStorage.getItem("nota") || "";
+editor.addEventListener("input", () => {
+  sessionStorage.setItem("nota", editor.value);
 });
 
-exportBtn.addEventListener('click', () => {
-  const text = editor.value;
-  const blob = new Blob([text], { type: 'text/plain' });
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = 'nota.txt';
-  link.click();
-});
+clearBtn.onclick = () => {
+  editor.value = "";
+  sessionStorage.removeItem("nota");
+};
 
-let preferredVoice = null;
+exportBtn.onclick = () => {
+  const blob = new Blob([editor.value], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "nota.txt";
+  a.click();
+  URL.revokeObjectURL(url);
+};
 
-function setPreferredVoice() {
-  const voices = speechSynthesis.getVoices();
-  preferredVoice = voices.find(v =>
-    v.lang.startsWith('es') &&
-    (
-      v.name.toLowerCase().includes('female') ||
-      v.name.toLowerCase().includes('mujer') ||
-      v.name.toLowerCase().includes('sabina') ||
-      v.name.toLowerCase().includes('paulina') ||
-      v.name.toLowerCase().includes('mónica') ||
-      v.name.toLowerCase().includes('helena') ||
-      v.name.toLowerCase().includes('soledad')
-    )
-  );
-  if (!preferredVoice) {
-    preferredVoice = voices.find(v => v.lang.startsWith('es'));
-  }
-}
+let utterance;
+readBtn.onclick = () => {
+  if (!window.speechSynthesis) return alert("Tu navegador no soporta lectura de voz.");
+  const voices = window.speechSynthesis.getVoices().filter(v => v.lang.startsWith("es") && v.name.toLowerCase().includes("femenina"));
+  const voice = voices.length ? voices[0] : speechSynthesis.getVoices().find(v => v.lang.startsWith("es"));
+  utterance = new SpeechSynthesisUtterance(editor.value);
+  utterance.voice = voice;
+  window.speechSynthesis.speak(utterance);
+};
 
-function speakText(text) {
-  if (!preferredVoice) {
-    alert('No se encontró una voz en español.');
-    return;
-  }
-  const msg = new SpeechSynthesisUtterance(text);
-  msg.voice = preferredVoice;
-  msg.lang = preferredVoice.lang;
-  speechSynthesis.speak(msg);
-}
-
-readBtn.addEventListener('click', () => {
-  if (!preferredVoice) {
-    setPreferredVoice();
-    setTimeout(() => {
-      speakText(editor.value);
-    }, 500);
-  } else {
-    speakText(editor.value);
-  }
-});
-
-stopBtn.addEventListener('click', () => {
-  speechSynthesis.cancel();
-});
-
-speechSynthesis.onvoiceschanged = setPreferredVoice;
-setPreferredVoice();
+stopBtn.onclick = () => {
+  window.speechSynthesis.cancel();
+};
