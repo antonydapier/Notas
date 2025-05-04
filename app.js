@@ -1,3 +1,4 @@
+
 const editor = document.getElementById('editor');
 const clearBtn = document.getElementById('clear');
 const exportBtn = document.getElementById('export');
@@ -25,26 +26,46 @@ function setPreferredVoice() {
   const voices = speechSynthesis.getVoices();
   preferredVoice = voices.find(v =>
     v.lang.startsWith('es') &&
-    (v.name.toLowerCase().includes('female') ||
-     v.name.toLowerCase().includes('mujer') ||
-     v.name.toLowerCase().includes('google español') ||
-     v.name.toLowerCase().includes('sabina') ||
-     v.name.toLowerCase().includes('mónica') ||
-     v.name.toLowerCase().includes('paulina'))
-  ) || voices.find(v => v.lang.startsWith('es'));
+    (
+      v.name.toLowerCase().includes('female') ||
+      v.name.toLowerCase().includes('mujer') ||
+      v.name.toLowerCase().includes('sabina') ||
+      v.name.toLowerCase().includes('paulina') ||
+      v.name.toLowerCase().includes('mónica') ||
+      v.name.toLowerCase().includes('helena') ||
+      v.name.toLowerCase().includes('soledad')
+    )
+  );
+  if (!preferredVoice) {
+    preferredVoice = voices.find(v => v.lang.startsWith('es'));
+  }
 }
 
-speechSynthesis.onvoiceschanged = setPreferredVoice;
-setPreferredVoice();
+function speakText(text) {
+  if (!preferredVoice) {
+    alert('No se encontró una voz en español.');
+    return;
+  }
+  const msg = new SpeechSynthesisUtterance(text);
+  msg.voice = preferredVoice;
+  msg.lang = preferredVoice.lang;
+  speechSynthesis.speak(msg);
+}
 
 readBtn.addEventListener('click', () => {
-  const text = editor.value;
-  const msg = new SpeechSynthesisUtterance(text);
-  msg.lang = 'es-ES';
-  if (preferredVoice) msg.voice = preferredVoice;
-  speechSynthesis.speak(msg);
+  if (!preferredVoice) {
+    setPreferredVoice();
+    setTimeout(() => {
+      speakText(editor.value);
+    }, 500);
+  } else {
+    speakText(editor.value);
+  }
 });
 
 stopBtn.addEventListener('click', () => {
   speechSynthesis.cancel();
 });
+
+speechSynthesis.onvoiceschanged = setPreferredVoice;
+setPreferredVoice();

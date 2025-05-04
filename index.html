@@ -3,22 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Notas</title>
+  <title></title>
   <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <div id="note-wrapper">
-    <textarea id="editor" placeholder="Escribe tus notas aquí..."></textarea>
-    <div id="note-tip">
-      <strong>Atajos útiles:</strong> # Título, **negrita**, *cursiva*, - lista, 1. lista numerada, `código`
-    </div>
-    <div class="buttons">
-      <button id="clear">Borrar Nota</button>
-      <button id="export">Exportar .txt</button>
-      <button id="read">🗣 Leer nota</button>
-      <button id="stop">⏹ Detener</button>
-    </div>
+  <textarea id="editor" placeholder="Escribe tu nota aquí..."></textarea>
+  <div id="controls">
+    <button id="clear">🗑 Borrar</button>
+    <button id="export">💾 Exportar .txt</button>
+    <button id="read">🔊 Leer</button>
+    <button id="stop">⏹ Detener</button>
   </div>
   <script src="app.js"></script>
 </body>
