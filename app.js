@@ -1,20 +1,12 @@
 const editor = document.getElementById('editor');
-const preview = document.getElementById('preview');
 const clearBtn = document.getElementById('clear');
 const exportBtn = document.getElementById('export');
-
-function renderMarkdown(text) {
-  preview.innerHTML = marked.parse(text);
-}
-
-editor.addEventListener('input', () => {
-  renderMarkdown(editor.value);
-});
+const readBtn = document.getElementById('read');
+const stopBtn = document.getElementById('stop');
 
 clearBtn.addEventListener('click', () => {
   if (confirm('¿Seguro que quieres borrar la nota?')) {
     editor.value = '';
-    renderMarkdown('');
   }
 });
 
@@ -27,5 +19,13 @@ exportBtn.addEventListener('click', () => {
   link.click();
 });
 
-// Render inicial vacío
-renderMarkdown('');
+readBtn.addEventListener('click', () => {
+  const text = editor.value;
+  const msg = new SpeechSynthesisUtterance(text);
+  msg.lang = 'es-ES';
+  speechSynthesis.speak(msg);
+});
+
+stopBtn.addEventListener('click', () => {
+  speechSynthesis.cancel();
+});
