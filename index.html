@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Notas Oscuras</title>
+  <style>
+    body {
+      background: #1E1E1E;
+      color: #FFFFFF;
+      font-family: 'DejaVu Sans Mono', monospace;
+      max-width: 80rem;
+      margin: 0 auto;
+      padding: 2rem;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    #editor {
+      outline: none;
+      min-height: 80vh;
+      white-space: pre-wrap;
+    }
+    #clear {
+      background: #333;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      margin-top: 1rem;
+      font-size: 1rem;
+    }
+    #clear:hover {
+      background: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>📝 Notas Oscuras</h1>
+  <div id="editor" contenteditable="true" spellcheck="false"></div>
+  <button id="clear">🗑 Borrar Nota</button>
+
+  <script>
+    const editor = document.getElementById('editor');
+    const clearBtn = document.getElementById('clear');
+
+    editor.innerHTML = localStorage.getItem('notasOscuras') || '';
+
+    editor.addEventListener('input', () => {
+      localStorage.setItem('notasOscuras', editor.innerHTML);
+    });
+
+    clearBtn.addEventListener('click', () => {
+      if (confirm('¿Seguro que quieres borrar la nota?')) {
+        editor.innerHTML = '';
+        localStorage.removeItem('notasOscuras');
+      }
+    });
+  </script>
+</body>
+</html>
