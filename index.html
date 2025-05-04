@@ -8,11 +8,13 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <div id="editor" contenteditable="true" spellcheck="false" placeholder="Escribe tus notas en markdown..."></div>
+  <textarea id="editor" placeholder="Escribe en Markdown aquí..."></textarea>
   <div class="buttons">
     <button id="clear">Borrar Nota</button>
     <button id="export">Exportar .txt</button>
   </div>
+  <h2>Vista previa</h2>
+  <div id="preview"></div>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="app.js"></script>
 </body>
