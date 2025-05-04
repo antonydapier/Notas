@@ -10,14 +10,23 @@ body {
   color: #fff;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
-#note-wrapper {
-  flex: 1;
+main {
   display: flex;
   flex-direction: column;
+  flex: 1;
   padding: 1rem;
+  overflow: hidden;
+}
+
+#note-tip {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-bottom: 0.5rem;
+  flex-shrink: 0;
 }
 
 #editor {
@@ -31,35 +40,28 @@ body {
   resize: none;
   padding: 1rem;
   line-height: 1.6;
+  overflow-y: auto;
 }
 
-#note-tip {
-  font-size: 0.9rem;
-  color: #aaa;
-  margin: 0.5rem 0 1rem;
-}
-
-.buttons {
+.controls {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: center;
-  padding: 1rem;
+  justify-content: space-around;
+  padding: 0.8rem;
+  background: #111;
   border-top: 1px solid #333;
-  background: #1e1e1e;
-  position: sticky;
-  bottom: 0;
-  z-index: 10;
+  flex-shrink: 0;
 }
 
 button {
   background: #333;
   color: #fff;
   border: none;
-  padding: 0.7rem 1rem;
+  padding: 0.6rem 0.9rem;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   cursor: pointer;
+  flex: 1;
+  margin: 0 0.3rem;
 }
 
 button:hover {
